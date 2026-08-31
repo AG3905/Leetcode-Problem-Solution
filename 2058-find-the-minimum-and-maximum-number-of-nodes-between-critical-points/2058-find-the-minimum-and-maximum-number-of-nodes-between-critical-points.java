@@ -17,13 +17,20 @@ class Solution {
         if(rear==null || cur==null || front==null) return new int[]{-1,-1};
 
         int cnt = 2;
-        List<Integer> arr = new ArrayList<>();
+        int f = -1;
+        int l = -1;
+
         int min = Integer.MAX_VALUE;
 
         while(front!=null){
             if((rear.val>cur.val && front.val>cur.val) || (rear.val<cur.val && front.val<cur.val)){
-                if(arr.size()>0) min = Math.min(min,cnt - arr.get(arr.size()-1));
-                arr.add(cnt);
+                if(f==-1){
+                    f = cnt;
+                }
+                if(l!=-1){
+                    min = Math.min(min,cnt-l);
+                }
+                l = cnt;
             }
 
             cnt++;
@@ -32,8 +39,8 @@ class Solution {
             front = front.next;
         }
 
-        int max = -1;
-        if(arr.size()>=2) max = arr.get(arr.size()-1)-arr.get(0);
+        int max = l-f;
+        if(max==0) max = -1;
         if(min==Integer.MAX_VALUE) min = -1;
 
         return new int[]{min,max};
