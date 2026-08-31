@@ -18,12 +18,11 @@ class Solution {
 
         int cnt = 2;
         List<Integer> arr = new ArrayList<>();
+        int min = Integer.MAX_VALUE;
 
         while(front!=null){
-            if(rear.val>cur.val && front.val>cur.val){
-                arr.add(cnt);
-            }
-            if(rear.val<cur.val && front.val<cur.val){
+            if((rear.val>cur.val && front.val>cur.val) || (rear.val<cur.val && front.val<cur.val)){
+                if(arr.size()>0) min = Math.min(min,cnt - arr.get(arr.size()-1));
                 arr.add(cnt);
             }
 
@@ -35,13 +34,6 @@ class Solution {
 
         int max = -1;
         if(arr.size()>=2) max = arr.get(arr.size()-1)-arr.get(0);
-
-        int min = Integer.MAX_VALUE;
-        for(int i=0 ; i<arr.size()-1 ; i++){
-            if(arr.get(i+1)-arr.get(i)<min){
-                min = arr.get(i+1)-arr.get(i);
-            }
-        }
         if(min==Integer.MAX_VALUE) min = -1;
 
         return new int[]{min,max};
